@@ -1,6 +1,7 @@
 require "terminal-table"
 
-require "./cart"
+require './cart'
+require './invoice'
 
 class PriceCalculator 
 
@@ -8,11 +9,11 @@ class PriceCalculator
 
     def initialize
         @cart = Cart.new.items_bought_list
-        @itemsList = []
+        @items_list = []
         @total_sale_price = 0
         @total_actual_price = 0
         calculate_price
-        print_invoice
+        get_invoice
     end
 
 
@@ -22,34 +23,15 @@ class PriceCalculator
             name = item.name
             sale_price = item.sale_price
            @total_sale_price +=  sale_price.round(2)
-           @itemsList << [name, quantity, "$#{sale_price}"]
+           @items_list << [name, quantity, "$#{sale_price}"]
            @total_actual_price += item.actual_price.round(2)
         end
     end
 
-
-    def print_invoice 
-        savings = @total_actual_price - @total_sale_price
-       puts print_table
-       puts "\n\nTotal price : $#{@total_sale_price}", "You saved $#{savings.round(2)} today.\n\n"
+    def get_invoice 
+        Invoice.new(@items_list).print_invoice(@total_actual_price, @total_sale_price)
     end
-
   
-
-  def print_table
-    table = Terminal::Table.new :headings => ["Item", "Quantity", "Price"], :rows => @itemsList
-    table.style = {
-      width: 45,
-      border_x: "-",
-      border_i: "",
-      border_y: "",
-      border_top: false,
-      border_bottom: false,
-      all_separators: false,
-    }
-    table
-  end
-    
 end
 
 
