@@ -1,13 +1,14 @@
 require "terminal-table"
 
+require "./cart"
+
 class PriceCalculator 
 
     attr_reader :items
 
     def initialize
-        puts "Please enter all the items purchased separated by a comma"
-        @items = gets.chomp.split(',')
-        @itemHash = []
+        @cart = Cart.new.items
+        @itemsList = []
         @total_sale_price = 0
         @total_actual_price = 0
         organize_items_with_quantity_and_price
@@ -15,18 +16,12 @@ class PriceCalculator
     end
 
 
-    def get_items_array
-        items.map do |item|
-         item.delete(" ").capitalize
-        end
-    end
-
     def organize_items_with_quantity_and_price
-        get_items_array.uniq.each do |item|
-            quantity = get_items_array.count(item)
+       @cart.uniq.each do |item|
+            quantity = @cart.count(item)
             sale_price = get_sale_price(item,quantity)
            @total_sale_price +=  sale_price.round(2)
-           @itemHash << [item, quantity, "$#{sale_price}"]
+           @itemsList << [item, quantity, "$#{sale_price}"]
           
            @total_actual_price += get_actual_price(item,quantity).round(2)
         end
@@ -41,10 +36,8 @@ class PriceCalculator
 
   
 
-
-
   def print_table
-    table = Terminal::Table.new :headings => ["Item", "Quantity", "Price"], :rows => @itemHash
+    table = Terminal::Table.new :headings => ["Item", "Quantity", "Price"], :rows => @itemsList
     table.style = {
       width: 45,
       border_x: "-",
@@ -58,13 +51,13 @@ class PriceCalculator
   end
 
   def total_price
-    quantity = get_items_array.count(item)
+    quantity = @cart.count(item)
     get_sale_price(item, quantity).round(2)
   end
 
 
   def get_price (item)
-    quantity = get_items_array.count(item)
+    quantity = @cart.count(item)
     get_sale_price(item, quantity).round(2)
   end
 
