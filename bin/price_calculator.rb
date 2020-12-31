@@ -7,7 +7,7 @@ class PriceCalculator
     attr_reader :items
 
     def initialize
-        @cart = Cart.new.items
+        @cart = Cart.new.items_bought_list
         @itemsList = []
         @total_sale_price = 0
         @total_actual_price = 0
@@ -17,13 +17,13 @@ class PriceCalculator
 
 
     def organize_items_with_quantity_and_price
-       @cart.uniq.each do |item|
-            quantity = @cart.count(item)
-            sale_price = get_sale_price(item,quantity)
+       @cart.each do |item|
+            quantity = item.quantity
+            name = item.name
+            sale_price = get_sale_price(name,quantity)
            @total_sale_price +=  sale_price.round(2)
-           @itemsList << [item, quantity, "$#{sale_price}"]
-          
-           @total_actual_price += get_actual_price(item,quantity).round(2)
+           @itemsList << [name, quantity, "$#{sale_price}"]
+           @total_actual_price += get_actual_price(name,quantity).round(2)
         end
     end
 
@@ -49,19 +49,6 @@ class PriceCalculator
     }
     table
   end
-
-  def total_price
-    quantity = @cart.count(item)
-    get_sale_price(item, quantity).round(2)
-  end
-
-
-  def get_price (item)
-    quantity = @cart.count(item)
-    get_sale_price(item, quantity).round(2)
-  end
-
-
 
 
   def get_sale_price(x,y) 

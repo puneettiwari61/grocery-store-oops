@@ -1,18 +1,27 @@
+require("./item")
+
 class Cart 
 
-    attr_reader :items
+    attr_reader :items , :items_bought_list
 
     def initialize
         puts "Please enter all the items purchased separated by a comma"
         @items = gets.chomp.delete(' ').split(',')
-        format_items
+        @items_bought_list = []
+        create_item
     end
 
-    def format_items 
-       @items = items.map {|x| x.capitalize}
-    end
  
+    def create_item
+        @items_bought_list = @items.uniq.map do |item|
+            quantity = @items.count(item)
+            item = item.capitalize
+            Item.new(item, quantity)
+        end
+    end
+
+
 
 end
 
-# puts Cart.new.format_items
+# puts Cart.new
