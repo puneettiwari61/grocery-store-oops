@@ -1,7 +1,7 @@
 require "terminal-table"
 
-require './cart'
-require './invoice'
+require_relative './cart'
+require_relative './invoice'
 
 class PriceCalculator 
 
@@ -35,4 +35,3 @@ class PriceCalculator
 end
 
 
-user_bill = PriceCalculator.new

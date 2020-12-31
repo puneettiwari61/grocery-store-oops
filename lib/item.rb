@@ -1,4 +1,4 @@
-require './item_price'
+require_relative './item_price'
 
 class Item
 
