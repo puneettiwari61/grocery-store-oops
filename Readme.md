@@ -8,7 +8,8 @@ Clone the repo using git clone https://github.com/puneettiwari61/grocery-store-o
 - Then run the program using ruby run_program.rb
 
 Output
-Please enter all the items purchased separated by a comma.
+
+- Please enter all the items purchased separated by a comma.
 milk,milk, bread,banana,bread,bread,bread,milk,apple
 
  Item           Quantity       Price
