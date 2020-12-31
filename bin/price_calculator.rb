@@ -11,19 +11,19 @@ class PriceCalculator
         @itemsList = []
         @total_sale_price = 0
         @total_actual_price = 0
-        organize_items_with_quantity_and_price
+        calculate_price
         print_invoice
     end
 
 
-    def organize_items_with_quantity_and_price
+    def calculate_price
        @cart.each do |item|
             quantity = item.quantity
             name = item.name
-            sale_price = get_sale_price(name,quantity)
+            sale_price = item.sale_price
            @total_sale_price +=  sale_price.round(2)
            @itemsList << [name, quantity, "$#{sale_price}"]
-           @total_actual_price += get_actual_price(name,quantity).round(2)
+           @total_actual_price += item.actual_price.round(2)
         end
     end
 
@@ -49,53 +49,6 @@ class PriceCalculator
     }
     table
   end
-
-
-  def get_sale_price(x,y) 
-    case x
-    when "Milk"
-        if y%2 == 0 
-            y/2 * 5.00
-        else 
-         (y-1)/2 * 5.00 + 3.97
-        end
-
-    when "Bread"
-        if y%3 == 0
-           y/3 * 6.00
-        else
-          (y -  (y/3) * 3) * 2.17 + (y/3 * 6)
-        end
-    when "Banana"
-        0.99 * y
-    when "Apple"
-        0.89 * y
-    else 
-        0
-    end
-end
-
-
-def get_actual_price (x,y)
-
-    case x
-    when "Milk"
-        y * 3.97
-
-    when "Bread"
-        y * 2.17
-
-    when "Banana"
-        y * 0.99 
-        
-    when "Apple"
-        y * 0.89
-    else 
-        0
-    end
-
-end
-
     
 end
 
