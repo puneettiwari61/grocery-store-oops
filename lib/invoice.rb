@@ -10,7 +10,19 @@ class Invoice
         savings = total_actual_price - total_sale_price
         puts "\n\nTotal price : $#{total_sale_price}", "You saved $#{savings.round(2)} today.\n\n"
      end
- 
+
+
+    # def generate_total_actual_price (total_actual_price)
+    #     @total_actual_price = total_actual_price
+    # end
+
+    # def generate_total_sale_price (total_sale_price)
+    #   @total_sale_price = total_sale_price
+    # end
+
+    # def generate_savings
+    #   @total_actual_price - @total_sale_price
+    # end
    
 
     def print_table
@@ -26,6 +38,7 @@ class Invoice
         }
         table
       end
+
 
 end
 
